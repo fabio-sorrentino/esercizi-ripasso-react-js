@@ -1,19 +1,21 @@
 import MovieCard from "./MovieCard";
 
-export default function MovieList({ movies }) {
+export default function MovieList({ movies, onToggleFavorite }) {
     return (
         <>
             {movies.map((movie) => (
                 <MovieCard
                     key={movie.id}
+                    id={movie.id}
                     title={movie.title}
                     year={movie.year}
                     poster={movie.poster}
                     genre={movie.genre}
                     watched={movie.watched}
+                    favorite={movie.favorite}
+                    onToggleFavorite={onToggleFavorite}
                 />
             ))}
         </>
-
-    )
+    );
 }
