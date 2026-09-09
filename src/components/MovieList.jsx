@@ -1,6 +1,9 @@
+import { movies } from "../data/movies";
 import MovieCard from "./MovieCard";
 
-export default function MovieList({ movies, onToggleFavorite }) {
+
+
+export default function MovieList({ movies, onToggleFavorite}) {
     return (
         <>
             {movies.map((movie) => (

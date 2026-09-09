@@ -1,7 +1,14 @@
-export default function SearchBar(){
-    return(
+export default function SearchBar({ searchTerm, onChange, }) {
+
+    return (
         <>
-            <input type="text" placeholder="Cerca un film..." />
+            <input
+                type="text"
+                value={searchTerm}
+                placeholder="Cerca un film..." onChange={onChange}
+              
+
+            />
         </>
     )
 }

@@ -18,11 +18,14 @@ function App() {
     );
   }
 
+  const [searchTerm,setSearchTerm] = useState("");
+  const filteredMovies = movies.filter(movies=> movies.title.includes(searchTerm))
+
   return (
     <>
-    <SearchBar/>
+    <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
       <Container>
-        <MovieList movies={movies} onToggleFavorite={handleToggleFavorite} />
+        <MovieList filteredMovies={movies.filter} onToggleFavorite={handleToggleFavorite} />
       </Container>
     </>
   );

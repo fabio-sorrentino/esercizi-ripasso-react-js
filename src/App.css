@@ -6,7 +6,7 @@
 
 body {
   font-family: 'Segoe UI', Arial, sans-serif;
-  background-color: #f5f5f5;
+  background-color: #3a3a3a;
   color: #f5f5f5;
 }
 
@@ -21,7 +21,7 @@ body {
 }
 
 .card {
-  background-color: #353535;
+  background-color: #b60920;
   border-radius: 10px;
   overflow: hidden;
   width: 200px;
@@ -62,18 +62,19 @@ body {
 }
 
 .favorite-btn {
-  background-color:#ffffff;
+  background-color:#000000;
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 6px 12px;
   cursor: pointer;
+  color:#ffffff
 }
 
 .favorite-btn .star {
-  color: #999; /* grigio quando non è preferito */
+  color: #ffffff; /* grigio quando non è preferito */
   transition: color 0.2s ease;
 }
 
 .favorite-btn--active .star {
-  color: gold; /* giallo solo quando è preferito */
+  color: rgb(241, 205, 0); /* giallo solo quando è preferito */
 }

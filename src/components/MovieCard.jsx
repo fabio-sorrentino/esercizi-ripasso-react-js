@@ -13,6 +13,7 @@ export default function MovieCard({ id, title, year, poster, watched, genre, fav
                 >
                     <span className="star">★</span> Preferito
                 </button>
+            
             </div>
         </article>
     );
