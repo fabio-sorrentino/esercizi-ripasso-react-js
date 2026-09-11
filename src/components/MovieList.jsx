@@ -1,24 +1,13 @@
-import { movies } from "../data/movies";
-import MovieCard from "./MovieCard";
+import MovieCard from './MovieCard'
 
+export default function MovieList({ movies, onClick }) {
+  if (!movies) return <p>Nessun film disponibile</p>
 
-
-export default function MovieList({ movies, onToggleFavorite}) {
-    return (
-        <>
-            {movies.map((movie) => (
-                <MovieCard
-                    key={movie.id}
-                    id={movie.id}
-                    title={movie.title}
-                    year={movie.year}
-                    poster={movie.poster}
-                    genre={movie.genre}
-                    watched={movie.watched}
-                    favorite={movie.favorite}
-                    onToggleFavorite={onToggleFavorite}
-                />
-            ))}
-        </>
-    );
+  return (
+    <div className='grid'>
+      {movies?.map((el) => (
+        <MovieCard key={el.id} {...el} onClick={onClick} />
+      ))}
+    </div>
+  )
 }

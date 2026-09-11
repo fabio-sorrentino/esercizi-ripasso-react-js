@@ -1,34 +1,40 @@
-import { useState } from "react";
-import Container from "./components/Container";
-import MovieList from "./components/MovieList";
-import { movies as initialMovies } from "./data/movies";
-import './App.css';
-import SearchBar from "./components/SearchBar";
+import { useState } from 'react'
+
+import { movies } from './data/movies'
+import './index.css'
+
+import Container from './components/Container'
+import MovieList from './components/MovieList'
+import SearchBar from './components/SearchBar'
+import Counter from './components/Counter'
 
 function App() {
-  const [movies, setMovies] = useState(initialMovies);
+  const [moviesList, setMoviesList] = useState(movies)
+  const [searchTerm, setSearchTerm] = useState('')
 
-  function handleToggleFavorite(id) {
-    setMovies((prevMovies) =>
-      prevMovies.map((movie) =>
-        movie.id === id
-          ? { ...movie, favorite: !movie.favorite }
-          : movie
-      )
-    );
+  function handleFavourites(id) {
+    setMoviesList((prev) =>
+      prev.map((el) =>
+        el.id === id ? { ...el, favorite: !el.favorite } : { ...el },
+      ),
+    )
   }
 
-  const [searchTerm,setSearchTerm] = useState("");
-  const filteredMovies = movies.filter(movies=> movies.title.includes(searchTerm))
+  const filteredMovies = moviesList.filter((el) =>
+    el.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  )
+
+  const favoriteFilteredMovies = filteredMovies.filter((el) => el.favorite)
 
   return (
-    <>
-    <SearchBar value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}/>
-      <Container>
-        <MovieList filteredMovies={movies.filter} onToggleFavorite={handleToggleFavorite} />
-      </Container>
-    </>
-  );
+    <Container>
+      <div className='toolbar'>
+        <SearchBar inputValue={searchTerm} onChange={setSearchTerm} />
+        <Counter count={favoriteFilteredMovies.length} />
+      </div>
+      <MovieList movies={filteredMovies} onClick={(e) => handleFavourites(e)} />
+    </Container>
+  )
 }
 
-export default App;
+export default App
