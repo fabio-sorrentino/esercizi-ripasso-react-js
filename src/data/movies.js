@@ -3,5 +3,9 @@ export const movies = [
     { id: 2, title: "Avengers Endgame", year: 2019, genre: "Azione, Fantascienza, Drammatico, Avventura", watched: true, poster: "https://pad.mymovies.it/filmclub/2018/12/029/locandina.jpg" },
     { id: 3, title: "Avatar Fuoco e Cenere", year: 2025, genre: "Fantascienza, Azione, Avventura", watched: false, poster: "https://www.today.it/~shared/images/cinema/locandine/avatar-fuoco-e-cenere-1htdoj.jpg" },
     { id: 4, title: "Cime Tempestose", year: 2026, genre: "Sentimentale, Drammatico, Grottesco", watched: false, poster: "https://m.media-amazon.com/images/M/MV5BNzU4MmY3MzUtN2VkZC00MjNlLThjY2UtZTJkMjg0NjRlNjVkXkEyXkFqcGc@._V1_.jpg" },
-
+    {id:5, title: "Il Signore degli Anelli: La Compagnia dell'Anello", year:2001, genre:"Avventura, Dramma", watched:true, poster: "https://www.ciakclub.it/wp-content/uploads/2023/02/il-signore-degli-anelli-la-compagnia-dell-anello-poster-768x1153.jpg"},
+    {id:6, title: "Il Signore degli Anelli: Le Due Torri", year:2002, genre:"Avventura, Dramma", watched:true, poster: "https://images.justwatch.com/poster/58840383/s718/il-signore-degli-anelli-le-due-torri.jpg"},
+    {id:7, title: "Il Signore degli Anelli: Il Ritorno del Re", year:2003, genre:"Avventura, Dramma", watched:true, poster: "https://images.justwatch.com/poster/81863657/s718/il-signore-degli-anelli-il-ritorno-del-re.%7Bformat%7D"},
+    {id:8, title: "The Wicked", year:2024, genre:"Fantastico, Musicale, Sentimentale", watched:false, poster: "https://media.themoviedb.org/t/p/w440_and_h660_face/l5nqmb8IgBGeJ6yC4BJrbpKdFF2.jpg"},
+    {id:9, title: "Jumanji: The Next Level", year:2019, genre:"Avventura, Fantastico, Commedia, Azione", watched:true, poster: "https://www.sonypictures.co.uk/sites/unitedkingdom/files/2020-12/Jumanji-keyArt_1.jpg"},
 ];
