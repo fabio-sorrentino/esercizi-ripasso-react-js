@@ -1,15 +1,22 @@
-export default function SearchBar({ inputValue, onChange, }) {
+import { useRef, useEffect } from 'react'
 
-    return (
-        <div className="search-bar">
-            <input
-                type="text"
-                value={inputValue}
-                onChange={(e)=> onChange(e.target.value)}
-                placeholder="Cerca un film..."
-              
+export default function SearchBar({ inputValue, onChange }) {
+  const inputRef = useRef(null)
 
-            />
-        </div>
-    )
+  useEffect(() => {
+    if (!inputRef?.current) return
+    inputRef.current.focus()
+  }, [])
+
+  return (
+    <div className='search-bar-wrapper'>
+      <input
+        ref={inputRef}
+        type='text'
+        value={inputValue}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder='Cerca...'
+      />
+    </div>
+  )
 }

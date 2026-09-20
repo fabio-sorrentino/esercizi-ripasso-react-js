@@ -1,7 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-import { movies } from './data/movies'
-import './index.css'
+import {movies} from './data/movies'
 
 import Container from './components/Container'
 import MovieList from './components/MovieList'
@@ -9,7 +8,11 @@ import SearchBar from './components/SearchBar'
 import Counter from './components/Counter'
 
 function App() {
-  const [moviesList, setMoviesList] = useState(movies)
+  const [moviesList, setMoviesList] = useState(() => {
+    const savedMovies = localStorage.getItem('savedMovies')
+    return savedMovies ? JSON.parse(savedMovies) : movies
+  })
+
   const [searchTerm, setSearchTerm] = useState('')
 
   function handleFavourites(id) {
@@ -26,9 +29,14 @@ function App() {
 
   const favoriteFilteredMovies = filteredMovies.filter((el) => el.favorite)
 
+  useEffect(() => {
+    if (!moviesList) return
+    localStorage.setItem('savedMovies', JSON.stringify(moviesList))
+  }, [moviesList])
+
   return (
     <Container>
-      <div className='toolbar'>
+      <div className='flex'>
         <SearchBar inputValue={searchTerm} onChange={setSearchTerm} />
         <Counter count={favoriteFilteredMovies.length} />
       </div>
