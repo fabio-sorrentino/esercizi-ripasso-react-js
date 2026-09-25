@@ -1,67 +1,57 @@
 import { useState, useEffect } from 'react'
 import MoviesContext from '../store/movies-context'
 
-function loadFavoriteIds() {
-  try {
-    return JSON.parse(localStorage.getItem('favoriteIds')) ?? []
-  } catch {
-    return []
-  }
-}
-
 export default function MoviesContextProvider({ children }) {
   const [moviesList, setMoviesList] = useState([])
-  const [favoriteIds, setFavoriteIds] = useState(loadFavoriteIds)
   const [searchTerm, setSearchTerm] = useState('')
-  const [error, setError] = useState(null)
-  const [loading, setIsLoading] = useState(false)
-
-  const moviesWithFavorite = moviesList.map((el) => ({
-    ...el,
-    favorite: favoriteIds.includes(el.id),
-  }))
-
-  const filteredMovies = moviesWithFavorite.filter((el) =>
+  const [error, setError] = useState()
+  const [loading, setIsLoading] = useState()
+  const filteredMovies = moviesList.filter((el) =>
     el.title.toLowerCase().includes(searchTerm.toLowerCase()),
   )
   const favoriteMovies = filteredMovies.filter((el) => el.favorite)
-
   function handleFavourites(id) {
-    setFavoriteIds((prev) =>
-      prev.includes(id) ? prev.filter((favId) => favId !== id) : [...prev, id],
+    setMoviesList((prev) =>
+      prev.map((el) =>
+        el.id === id ? { ...el, favorite: !el.favorite } : { ...el },
+      ),
     )
   }
 
-  useEffect(() => {
-    async function getMovies() {
-      try {
-        setIsLoading(true)
-        const res = await fetch('https://api.themoviedb.org/3/movie/popular', {
-          headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`,
-          },
-        })
+  const getMovies = async () => {
+    try {
+      setIsLoading(true)
+      const res = await fetch('https://api.themoviedb.org/3/movie/top_rated', {
+        method: 'GET',
+        headers: {
+          accept: 'application/json',
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkZDU1M2VmZWMwNzRjOGJjZGM2YzFlMDJmODZjZTgwNSIsIm5iZiI6MTc0ODY4NDg0OC4xNjIsInN1YiI6IjY4M2FkMDMwZGFhNzJmZmMzN2ZkYTlhOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.q2YnB5D7gwHFSwZ9z2M66q308tt-Y1r97CGjw9cGOhU',
+        },
+      })
 
-        if (!res.ok) {
-          const errorData = await res.json()
-          throw new Error(errorData.status_message)
-        }
-
-        const data = await res.json()
-        setMoviesList(data.results)
-      } catch (err) {
-        setError(err)
-      } finally {
-        setIsLoading(false)
+      if (!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.status_message)
       }
+
+      const data = await res.json()
+      setMoviesList(data.results)
+    } catch (err) {
+      setError(err)
+    } finally {
+      setIsLoading(false)
     }
+  }
+
+  useEffect(() => {
     getMovies()
   }, [])
 
   useEffect(() => {
-    localStorage.setItem('favoriteIds', JSON.stringify(favoriteIds))
-  }, [favoriteIds])
+    if (!moviesList) return
+    localStorage.setItem('savedMovies', JSON.stringify(moviesList))
+  }, [moviesList])
 
   const ctx = {
     moviesList,
@@ -71,9 +61,6 @@ export default function MoviesContextProvider({ children }) {
     searchTerm,
     setSearchTerm,
     filteredMovies,
-    loading,
-    error,
   }
-
   return <MoviesContext.Provider value={ctx}>{children}</MoviesContext.Provider>
 }
